@@ -1,0 +1,14 @@
+{
+    "jwtSecret": "secretTest@123456",
+    "loginLink": "http://localhost:3000/auth",
+    "emailService":{
+        "testDomain": "sandbox472b72584a524f708d3e4bf436efd2ed.mailgun.org",
+        "privateApiKey": "5f898b42e6bea2325e8b2399bf1d69ac",
+        "publicApiKey": "pubkey-6e3988fdb25dbda4288ea26b540432f5",
+        "emailTemplates": {
+            "forgotPassword": "forgot-password",
+            "verifyEmail": "verify-email",
+            "orderSuccess": "order-success"
+        }
+    }
+}
