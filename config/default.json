@@ -1,5 +1,6 @@
 {
     "jwtSecret": "secretTest@123456",
+    "adminSecretToken":  "admin@123",
     "loginLink": "http://localhost:3000/auth",
     "emailService":{
         "testDomain": "sandbox472b72584a524f708d3e4bf436efd2ed.mailgun.org",
