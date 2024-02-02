@@ -27,7 +27,7 @@ export class UsersService {
       //check if user is admin
       if (
         createUserDto.type === userTypes.ADMIN &&
-        createUserDto.secretToken !== 'admin@123'
+        createUserDto.secretToken !== config.get('adminSecretToken')
       ) {
         throw new Error('Not allowed to create Admin');
       } else if (createUserDto.type !== userTypes.CUSTOMER) {
