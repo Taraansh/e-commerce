@@ -24,4 +24,8 @@ export class UserRepository {
   async find(query: any){
     return this.userModel.find(query)
   }
+
+  async findById(id:string){
+    return this.userModel.findById(id)
+  }
 }
