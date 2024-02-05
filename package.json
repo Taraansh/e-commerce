@@ -33,12 +33,16 @@
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
     "class-validator": "^0.14.1",
+    "cloudinary": "^2.0.0",
     "config": "^3.3.11",
     "cookie-parser": "^1.4.6",
     "form-data": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
+    "nestjs-stripe": "^1.0.0",
+    "qs-to-mongo": "^3.0.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "stripe": "^14.14.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
