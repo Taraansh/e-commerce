@@ -1,15 +1,32 @@
 {
-    "jwtSecret": "secretTest@123456",
-    "adminSecretToken":  "admin@123",
-    "loginLink": "http://localhost:3000/auth",
-    "emailService":{
-        "testDomain": "sandbox472b72584a524f708d3e4bf436efd2ed.mailgun.org",
-        "privateApiKey": "5f898b42e6bea2325e8b2399bf1d69ac",
-        "publicApiKey": "pubkey-6e3988fdb25dbda4288ea26b540432f5",
-        "emailTemplates": {
-            "forgotPassword": "forgot-password",
-            "verifyEmail": "verify-email",
-            "orderSuccess": "order-success"
-        }
+  "jwtSecret": "secretTest@123456",
+  "adminSecretToken": "admin@123",
+  "loginLink": "http://localhost:3000/auth",
+  "appPrefix": "/api/v1",
+  "fileStoragePath": "../uploads/",
+  "emailService": {
+    "testDomain": "sandbox472b72584a524f708d3e4bf436efd2ed.mailgun.org",
+    "privateApiKey": "5f898b42e6bea2325e8b2399bf1d69ac",
+    "publicApiKey": "pubkey-6e3988fdb25dbda4288ea26b540432f5",
+    "emailTemplates": {
+      "forgotPassword": "forgot-password",
+      "verifyEmail": "verify-email",
+      "orderSuccess": "order-success"
     }
+  },
+  "cloudinary": {
+    "cloud_name": "dsxbdwdb8",
+    "api_key": "979728538987425",
+    "api_secret": "Li6cp1W0LFBKePjfsHcCoKhsTdg",
+    "folderPath": "e-commerce/products",
+    "publicId_prefix": "products_",
+    "bigSize": "400X400"
+  },
+  "stripe": {
+    "publishable_key":"pk_live_51OfMGhSHu1eLU5gw618Lys29NefFPOM0XueSFMocBXvC3Dc0EKO2nqOXVN1jueJ1REw9z5K2uSAZFM1nLWydjCc500mmadIvgp",
+    "secret_key": "sk_test_51OfMGhSHu1eLU5gwYV7Ov0j4aRuY0mH0vk3zQ85wsahVWYO89EYeQiNpSeNC8uR2WXGjivq9zSUrIlDmiuwFqLSq00OKUaw9tK",
+    "successUrl": "http://localhost:3000/order-success",
+    "cancelUrl": "http://localhost:3000/order-cancel",
+    "webhook_secret": " "
+  }
 }
