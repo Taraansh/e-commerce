@@ -11,6 +11,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Put,
+  Req,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -142,5 +143,29 @@ export class ProductsController {
       licenseKeyId,
       licenseKey,
     );
+  }
+
+  @Post('/:productId/reviews')
+  @Roles(userTypes.CUSTOMER)
+  async addProductReview(
+    @Param('productId') productId: string,
+    @Body('rating') rating: number,
+    @Body('review') review: string,
+    @Req() req: any,
+  ) {
+    return await this.productsService.addProductReview(
+      productId,
+      rating,
+      review,
+      req.user,
+    );
+  }
+
+  @Delete('/:productId/reviews/:reviewId')
+  async removeProductReview(
+    @Param('productId') productId: string,
+    @Param('reviewId') reviewId: string,
+  ) {
+    return await this.productsService.removeProductReview(productId, reviewId);
   }
 }
