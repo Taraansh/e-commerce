@@ -91,7 +91,11 @@ export class ProductsRepository {
     return license;
   }
 
-  async findLicense(query: any) {
+  async findLicense(query: any, limit?: number) {
+    if (limit && limit > 0) {
+      const license = await this.licenseModel.find(query).limit(limit);
+      return license;
+    }
     const license = await this.licenseModel.find(query);
     return license;
   }
@@ -100,6 +104,11 @@ export class ProductsRepository {
     const license = await this.licenseModel.findByIdAndUpdate(query, update, {
       new: true,
     });
+    return license;
+  }
+
+  async updateLicenseMany(query: any, data: any) {
+    const license = await this.licenseModel.updateMany(query, data);
     return license;
   }
 }
