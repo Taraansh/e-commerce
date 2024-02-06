@@ -6,10 +6,11 @@ import { UsersModule } from './users/users.module';
 import { AllExceptionFilter } from './httpExceptionFilter';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
+import config from 'config'
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/e-commerce'),
+    MongooseModule.forRoot(config.get('mongoDBUrl')),
     UsersModule,
     ProductsModule,
     OrdersModule,

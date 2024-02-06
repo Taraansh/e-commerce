@@ -1,4 +1,6 @@
 {
+  "port": "3100",
+  "mongoDBUrl": "mongodb://localhost:27017/e-commerce",
   "jwtSecret": "secretTest@123456",
   "adminSecretToken": "admin@123",
   "loginLink": "http://localhost:3000/auth",

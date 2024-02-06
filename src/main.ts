@@ -12,6 +12,6 @@ async function bootstrap() {
   app.use('/api/v1/orders/webhook', raw({type: '*/*'}))
   app.setGlobalPrefix(config.get('appPrefix'))
   app.useGlobalInterceptors(new TransformationInterceptor());
-  await app.listen(3000);
+  await app.listen(config.get("port"));
 }
 bootstrap();
