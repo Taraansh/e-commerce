@@ -68,7 +68,7 @@ export class UsersService {
         message:
           newUser.type === userTypes.ADMIN
             ? 'Admin created'
-            : 'Please activate your accound by verifying your email. We have sent you an email with otp',
+            : 'Please activate your account by verifying your email. We have sent you an email with otp',
         result: { email: newUser.email },
       };
     } catch (error) {
