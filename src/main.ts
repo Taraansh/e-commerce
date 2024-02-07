@@ -1,17 +1,31 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { TransformationInterceptor } from './responseInterceptor';
-import cookieParser from 'cookie-parser'
-import config from 'config'
-import { raw } from 'express';
+import cookieParser from 'cookie-parser';
+import config from 'config';
+import { NextFunction, raw, Request, Response } from 'express';
+import csurf from 'csurf';
+const ROOT_IGNORED_PATHS = ['/api/v1/orders/webhook'];
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {rawBody: true});
+  const app = await NestFactory.create(AppModule, { rawBody: true });
 
   app.use(cookieParser());
-  app.use('/api/v1/orders/webhook', raw({type: '*/*'}))
-  app.setGlobalPrefix(config.get('appPrefix'))
+  app.use('/api/v1/orders/webhook', raw({ type: '*/*' }));
+
+  const csrfMiddleware = csurf({
+    cookie: true,
+  });
+
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (ROOT_IGNORED_PATHS.includes(req.path)) {
+      return next();
+    }
+    return csrfMiddleware(req, res, next);
+  });
+
+  app.setGlobalPrefix(config.get('appPrefix'));
   app.useGlobalInterceptors(new TransformationInterceptor());
-  await app.listen(config.get("port"));
+  await app.listen(config.get('port'));
 }
 bootstrap();
