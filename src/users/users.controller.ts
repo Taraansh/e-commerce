@@ -73,7 +73,7 @@ export class UsersController {
     return await this.usersService.findAll(type);
   }
 
-  @Patch('/update-name-password')
+  @Patch('/update-name-password/:id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return await this.usersService.updatePasswordorName(id, updateUserDto);
   }
