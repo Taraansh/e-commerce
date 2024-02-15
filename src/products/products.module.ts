@@ -32,8 +32,8 @@ import { OrdersRepository } from 'src/shared/repositories/order.repository';
   imports: [
     MongooseModule.forFeature([{ name: Products.name, schema: ProductSchema }]),
     MongooseModule.forFeature([{ name: Users.name, schema: UsersSchema }]),
-    MongooseModule.forFeature([{name: License.name, schema: LicenseSchema}]),
-    MongooseModule.forFeature([{name: Orders.name, schema: OrderSchema}]),
+    MongooseModule.forFeature([{ name: License.name, schema: LicenseSchema }]),
+    MongooseModule.forFeature([{ name: Orders.name, schema: OrderSchema }]),
     StripeModule.forRoot({
       apiKey: config.get('stripe.secret_key'),
       apiVersion: '2023-10-16',
@@ -42,19 +42,18 @@ import { OrdersRepository } from 'src/shared/repositories/order.repository';
 })
 export class ProductsModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthMiddleware)
-      .exclude(
-        {
-          path: `${config.get('appPrefix')}/products`,
-          method: RequestMethod.GET,
-        },
-        {
-          path: `${config.get('appPrefix')}/products/:id`,
-          method: RequestMethod.GET,
-        },
-        
-      )
-      .forRoutes(ProductsController);
+    //     consumer
+    //       .apply(AuthMiddleware)
+    //       .exclude(
+    //         {
+    //           path: `${config.get('appPrefix')}/products`,
+    //           method: RequestMethod.GET,
+    //         },
+    //         {
+    //           path: `${config.get('appPrefix')}/products/:id`,
+    //           method: RequestMethod.GET,
+    //         },
+    //       )
+    //       .forRoutes(ProductsController);
   }
 }
