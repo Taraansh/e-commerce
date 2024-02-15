@@ -1,7 +1,7 @@
 export class GetProductQueryDto {
   search?: string;
-  catgeory?: string;
+  category?: string;
   platformType?: string;
   baseType?: string;
-  homepage?:string
+  homepage?: string;
 }

@@ -3,9 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
   Query,
   Req,
   Headers,
@@ -28,12 +26,15 @@ export class OrdersController {
   }
 
   @Post('/checkout')
-  async checkout(@Body() body: checkoutDtoArr, @Req() req: any){
-    return await this.ordersService.checkout(body, req.user)
+  async checkout(@Body() body: checkoutDtoArr, @Req() req: any) {
+    return await this.ordersService.checkout(body, req.user);
   }
 
   @Post('/webhook')
-  async webhook(@Body() rawBody:Buffer, @Headers('stripe-signature') sig:string){
-    return await this.ordersService.webhook(rawBody, sig)
+  async webhook(
+    @Body() rawBody: Buffer,
+    @Headers('stripe-signature') sig: string,
+  ) {
+    return await this.ordersService.webhook(rawBody, sig);
   }
 }

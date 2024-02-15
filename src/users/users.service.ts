@@ -80,17 +80,29 @@ export class UsersService {
     try {
       const userExists = await this.userDB.findOne({ email });
       if (!userExists) {
-        throw new Error('Invalid Email or Password');
+        return {
+          success: false,
+          message: 'Invalid Email or Password',
+          result: null,
+        };
       }
       if (!userExists.isVerified) {
-        throw new Error('Please verify your email');
+        return {
+          success: false,
+          message: 'Please verify your email',
+          result: null,
+        };
       }
       const isPasswordMatch = await comparePassword(
         password,
         userExists.password,
       );
       if (!isPasswordMatch) {
-        throw new Error('Invalid Email or Password');
+        return {
+          success: false,
+          message: 'Invalid Email or Password',
+          result: null,
+        };
       }
 
       const token = await generateAuthToken(userExists._id);
@@ -204,12 +216,12 @@ export class UsersService {
 
   async findAll(type: string) {
     try {
-      const users = await this.userDB.find({type})
+      const users = await this.userDB.find({ type });
       return {
         success: true,
-        message: "All users",
-        result: users
-      }
+        message: 'All users',
+        result: users,
+      };
     } catch (error) {
       throw error;
     }

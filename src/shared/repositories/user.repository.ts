@@ -21,11 +21,11 @@ export class UserRepository {
     return this.userModel.updateOne(query, data);
   }
 
-  async find(query: any){
-    return this.userModel.find(query)
+  async find(query: any) {
+    return this.userModel.find(query);
   }
 
-  async findById(id:string){
-    return this.userModel.findById(id)
+  async findById(id: string) {
+    return this.userModel.findById(id);
   }
 }

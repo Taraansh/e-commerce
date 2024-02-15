@@ -11,15 +11,10 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/test')
-  getTest(): string{
-    return this.appService.getTest()
-  }
-
   @Get('/csrf-token')
-  getCsrfToken(@Req() req: Request):any{
+  getCsrfToken(@Req() req: Request): any {
     return {
-      result: req.csrfToken()
-    }
+      result: req.csrfToken(),
+    };
   }
 }

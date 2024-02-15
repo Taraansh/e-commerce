@@ -28,7 +28,7 @@ export class ProductsController {
 
   @Post()
   @HttpCode(201)
-  @Roles(userTypes.ADMIN)
+  // @Roles(userTypes.ADMIN)
   async create(@Body() createProductDto: CreateProductDto) {
     return await this.productsService.createProduct(createProductDto);
   }
@@ -44,7 +44,7 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  @Roles(userTypes.ADMIN)
+  // @Roles(userTypes.ADMIN)
   async update(
     @Param('id') id: string,
     @Body() updateProductDto: CreateProductDto,
@@ -58,7 +58,7 @@ export class ProductsController {
   }
 
   @Post('/:id/image')
-  @Roles(userTypes.ADMIN)
+  // @Roles(userTypes.ADMIN)
   @UseInterceptors(
     FileInterceptor('productImage', {
       dest: config.get('fileStoragePath'),
@@ -75,7 +75,7 @@ export class ProductsController {
   }
 
   @Post('/:productId/skus')
-  @Roles(userTypes.ADMIN)
+  // @Roles(userTypes.ADMIN)
   async updateProductSku(
     @Param('productId') productId: string,
     @Body() updateProductSkuDto: ProductSkuDtoArr,
@@ -87,7 +87,7 @@ export class ProductsController {
   }
 
   @Put('/:productId/skus/:skuId')
-  @Roles(userTypes.ADMIN)
+  // @Roles(userTypes.ADMIN)
   async updateProductSkuById(
     @Param('productId') productId: string,
     @Param('skuId') skuId: string,
@@ -101,7 +101,7 @@ export class ProductsController {
   }
 
   @Post('/:productId/skus/:skuId/licenses')
-  @Roles(userTypes.ADMIN)
+  // @Roles(userTypes.ADMIN)
   async addProductSkuLicense(
     @Param('productId') productId: string,
     @Param('skuId') skuId: string,
@@ -115,13 +115,13 @@ export class ProductsController {
   }
 
   @Delete('licenses/:licenseKeyId')
-  @Roles(userTypes.ADMIN)
+  // @Roles(userTypes.ADMIN)
   async removeProductSkuLicense(@Param('licenseKeyId') licenseId: string) {
     return await this.productsService.removeProductSkuLicense(licenseId);
   }
 
   @Get('/:productId/skus/:skuId/licenses')
-  @Roles(userTypes.ADMIN)
+  // @Roles(userTypes.ADMIN)
   async getProductSkuLicenses(
     @Param('productId') productId: string,
     @Param('skuId') skuId: string,
@@ -130,7 +130,7 @@ export class ProductsController {
   }
 
   @Put('/:productId/skus/:skuId/licenses/:licenseKeyId')
-  @Roles(userTypes.ADMIN)
+  // @Roles(userTypes.ADMIN)
   async updateProductSkuLicense(
     @Param('productId') productId: string,
     @Param('skuId') skuId: string,
@@ -167,5 +167,14 @@ export class ProductsController {
     @Param('reviewId') reviewId: string,
   ) {
     return await this.productsService.removeProductReview(productId, reviewId);
+  }
+
+  @Delete('/:productId/skus/:skuId')
+  // @Roles(userTypes.ADMIN)
+  async deleteSkuById(
+    @Param('productId') productId: string,
+    @Param('skuId') skuId: string,
+  ) {
+    return await this.productsService.deleteProductSkuById(productId, skuId);
   }
 }

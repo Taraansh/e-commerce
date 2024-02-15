@@ -1,5 +1,16 @@
-import { IsArray, IsEmpty, IsEnum, IsOptional, IsString } from 'class-validator';
-import { SkuDetails, baseType, catgeoryType, platformType } from 'src/shared/schema/products';
+import {
+  IsArray,
+  IsEmpty,
+  IsEnum,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import {
+  SkuDetails,
+  baseType,
+  categoryType,
+  platformType,
+} from 'src/shared/schema/products';
 
 export class CreateProductDto {
   @IsString()
@@ -18,8 +29,8 @@ export class CreateProductDto {
 
   @IsString()
   @IsEmpty()
-  @IsEnum(catgeoryType)
-  catgeory: string;
+  @IsEnum(categoryType)
+  category: string;
 
   @IsString()
   @IsEmpty()

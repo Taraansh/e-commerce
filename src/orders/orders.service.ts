@@ -7,7 +7,6 @@ import { UserRepository } from 'src/shared/repositories/user.repository';
 import Stripe from 'stripe';
 import config from 'config';
 import { userTypes } from 'src/shared/schema/users';
-import { CreateOrderDto } from './dto/create-order.dto';
 import { orderStatus, paymentStatus } from 'src/shared/schema/orders';
 import { sendEmail } from 'src/shared/utility/mail-handler';
 
@@ -22,6 +21,7 @@ export class OrdersService {
 
   async create(createOrderDto: Record<string, any>) {
     try {
+      // console.log(createOrderDto);
       const orderExists = await this.orderDB.findOne({
         checkoutSessionId: createOrderDto.checkoutSessionId,
       });
@@ -110,7 +110,6 @@ export class OrdersService {
         cancel_url: config.get('stripe.cancelUrl'),
         success_url: config.get('stripe.successUrl'),
       });
-
       return {
         success: true,
         result: session.url,
@@ -124,13 +123,16 @@ export class OrdersService {
   // to create a checkout session, we need to create a webhook, and webhook can only be created on the public url
   async webhook(rawBody: Buffer, sig: string) {
     try {
-      let event;
+      let event: Stripe.Event;
       try {
         event = this.stripeClient.webhooks.constructEvent(
           rawBody,
           sig,
-          config.get('stripe.webhook_secret'),
+          config.get('stripe.webhookSecret'),
         );
+        // console.log('event---', event);
+        // console.log(event.type);
+        // console.log(event.data);
       } catch (err) {
         throw new BadRequestException('Webhook Error:', err.message);
       }
@@ -157,7 +159,7 @@ export class OrdersService {
           );
         }
       } else {
-        console.log('Unhandled event type', event.type)
+        console.log('Unhandled event type', event.type);
       }
     } catch (error) {
       throw error;
@@ -211,9 +213,14 @@ export class OrdersService {
       const licenseIds = licenses.map((license) => license._id);
       await this.productDB.updateLicenseMany(
         {
-          _id: { $in: licenseIds },
+          _id: {
+            $in: licenseIds,
+          },
         },
-        { isSold: true, orderId },
+        {
+          isSold: true,
+          orderId,
+        },
       );
 
       return licenses.map((license) => license.licenseKey);
@@ -224,12 +231,14 @@ export class OrdersService {
 
   async createOrderObject(session: Stripe.Checkout.Session) {
     try {
+      // console.log(session);
       const lineItems = await this.stripeClient.checkout.sessions.listLineItems(
         session.id,
       );
       const orderData = {
         orderId: Math.floor(new Date().valueOf() * Math.random()) + '',
-        userId: session.metadata?.user_id?.toString(),
+        userId: session.metadata?.userId?.toString(),
+        userName: session.customer_details?.name,
         customerAddress: session.customer_details?.address,
         customerEmail: session.customer_email,
         customerPhoneNumber: session.customer_details?.phone,
@@ -237,7 +246,7 @@ export class OrdersService {
           paymentMethod: session.payment_method_types[0],
           paymentIntentId: session.payment_intent,
           paymentDate: new Date(),
-          paymentAmout: session.amount_total / 100,
+          paymentAmount: session.amount_total / 100,
           paymentStatus: session.payment_status,
         },
         orderDate: new Date(),

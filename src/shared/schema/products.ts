@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
-export enum catgeoryType {
+export enum categoryType {
   operatingSystem = 'Operating System',
   applicationSoftware = 'Application Software',
 }
@@ -16,7 +16,7 @@ export enum platformType {
 
 export enum baseType {
   computer = 'Computer',
-  mobile = 'mobile',
+  mobile = 'Mobile',
 }
 
 @Schema({ timestamps: true })
@@ -67,12 +67,15 @@ export class Products {
   @Prop({ required: true })
   description: string;
 
-  @Prop({ default: "https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" })
+  @Prop({
+    default:
+      'https://st4.depositphotos.com/14953852/24787/v/450/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg',
+  })
   image?: string;
 
   @Prop({
     required: true,
-    enum: [catgeoryType.applicationSoftware, catgeoryType.operatingSystem],
+    enum: [categoryType.applicationSoftware, categoryType.operatingSystem],
   })
   category: string;
 
@@ -106,7 +109,7 @@ export class Products {
   @Prop([{ type: SkuDetailsSchema }])
   skuDetails: SkuDetails[];
 
-  @Prop({ type: Object})
+  @Prop({ type: Object })
   imageDetails: Record<string, any>;
 
   @Prop({})

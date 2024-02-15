@@ -313,14 +313,14 @@ export class ProductsService {
         }
       }
 
-      await this.productDB.findOneAndUpdate(
+      const result = await this.productDB.findOneAndUpdate(
         { _id: productId, 'skuDetails._id': skuId },
         { $set: dataForUpdate },
       );
       return {
         success: true,
         message: 'Product sku updated successfully',
-        result: null,
+        result: result,
       };
     } catch (error) {
       throw error;
@@ -530,6 +530,34 @@ export class ProductsService {
         message: 'Product review removed successfully',
         success: true,
         result,
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteProductSkuById(id: string, skuId: string) {
+    try {
+      const productDetails = await this.productDB.findOne({ _id: id });
+      const skuDetails = productDetails.skuDetails.find(
+        (sku) => sku._id.toString() === skuId,
+      );
+      await this.stripeClient.prices.update(skuDetails.stripePriceId, {
+        active: false,
+      });
+
+      // delete the sku details from product
+      await this.productDB.deleteSku(id, skuId);
+      // delete all the licences from db for that sku
+      await this.productDB.deleteAllLicences(undefined, skuId);
+
+      return {
+        message: 'Product sku details deleted successfully',
+        success: true,
+        result: {
+          id,
+          skuId,
+        },
       };
     } catch (error) {
       throw error;

@@ -63,13 +63,13 @@ export class UsersController {
   }
 
   @Get('forgot-password/:email')
-  async forgotPassword(@Param('email') email: string){
-    return await this.usersService.forgotPassword(email)
+  async forgotPassword(@Param('email') email: string) {
+    return await this.usersService.forgotPassword(email);
   }
 
   @Get()
   @Roles(userTypes.ADMIN)
-  async findAll(@Query('type') type:string) {
+  async findAll(@Query('type') type: string) {
     return await this.usersService.findAll(type);
   }
 

@@ -47,8 +47,11 @@ export class Orders {
   @Prop({ required: true })
   orderId: string;
 
-  @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: 'Users' })
-  user: string;
+  @Prop({ required: true })
+  userId: string;
+
+  @Prop({ required: true })
+  userName: string;
 
   @Prop({ required: true, type: Object })
   customerAddress: {

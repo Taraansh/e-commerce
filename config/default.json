@@ -25,10 +25,10 @@
     "bigSize": "400X400"
   },
   "stripe": {
-    "publishable_key":"pk_live_51OfMGhSHu1eLU5gw618Lys29NefFPOM0XueSFMocBXvC3Dc0EKO2nqOXVN1jueJ1REw9z5K2uSAZFM1nLWydjCc500mmadIvgp",
+    "publishable_key": "pk_live_51OfMGhSHu1eLU5gw618Lys29NefFPOM0XueSFMocBXvC3Dc0EKO2nqOXVN1jueJ1REw9z5K2uSAZFM1nLWydjCc500mmadIvgp",
     "secret_key": "sk_test_51OfMGhSHu1eLU5gwYV7Ov0j4aRuY0mH0vk3zQ85wsahVWYO89EYeQiNpSeNC8uR2WXGjivq9zSUrIlDmiuwFqLSq00OKUaw9tK",
-    "successUrl": "http://localhost:3000/api/v1/orders/order-success",
-    "cancelUrl": "http://localhost:3000/api/v1/orders/order-cancel",
-    "webhook_secret": "whsec_79b27b186d738f92a6f9f4e6a4478cd9be39c8b5141659636142d9e967f85e38"
+    "successUrl": "http://localhost:3000/orders/order-success",
+    "cancelUrl": "http://localhost:3000/orders/order-cancel",
+    "webhookSecret": "whsec_79b27b186d738f92a6f9f4e6a4478cd9be39c8b5141659636142d9e967f85e38"
   }
 }
