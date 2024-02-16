@@ -6,16 +6,6 @@
   "loginLink": "http://localhost:3000/auth",
   "appPrefix": "/api/v1",
   "fileStoragePath": "../uploads/",
-  "emailService": {
-    "testDomain": "sandbox472b72584a524f708d3e4bf436efd2ed.mailgun.org",
-    "privateApiKey": "5f898b42e6bea2325e8b2399bf1d69ac",
-    "publicApiKey": "pubkey-6e3988fdb25dbda4288ea26b540432f5",
-    "emailTemplates": {
-      "forgotPassword": "forgot-password",
-      "verifyEmail": "verify-email",
-      "orderSuccess": "order-success"
-    }
-  },
   "cloudinary": {
     "cloud_name": "dsxbdwdb8",
     "api_key": "979728538987425",
