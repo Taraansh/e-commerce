@@ -8,14 +8,15 @@ import {
   comparePassword,
   generateHashPassword,
 } from 'src/shared/utility/password-manager';
-import { sendEmail } from 'src/shared/utility/mail-handler';
 import config from 'config';
 import { generateAuthToken } from 'src/shared/utility/token-generator';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject(UserRepository) private readonly userDB: UserRepository,
+    private readonly mailerService: MailerService,
   ) {}
   async create(createUserDto: CreateUserDto) {
     try {
@@ -55,12 +56,13 @@ export class UsersService {
       });
 
       if (newUser.type !== userTypes.ADMIN) {
-        sendEmail(
-          newUser.email,
-          config.get('emailService.emailTemplates.verifyEmail'),
-          'Email Verification - E-commerce',
-          { customerName: newUser.name, customerEmail: newUser.email, otp },
-        );
+        this.mailerService.sendMail({
+          to: newUser.email,
+          from: 'venom200011@gmail.com',
+          subject: 'Verify your email',
+          text: `Welcome. Your OTP is ${otp}.`,
+          html: `<b>Welcome</b>. <p>Otp for user ${newUser.name} with email ${newUser.email} is ${otp}</p>.`,
+        });
       }
 
       return {
@@ -164,12 +166,13 @@ export class UsersService {
       otpExpiryTime.setMinutes(otpExpiryTime.getMinutes() * 10);
 
       await this.userDB.updateOne({ email }, { otp, otpExpiryTime });
-      sendEmail(
-        user.email,
-        config.get('emailService.emailTemplates.verifyEmail'),
-        'Email Verification - E-commerce',
-        { customerName: user.name, customerEmail: user.email, otp },
-      );
+      this.mailerService.sendMail({
+        to: user.email,
+        from: 'venom200011@gmail.com',
+        subject: 'Verify your email',
+        text: `Welcome. Your OTP is ${otp}.`,
+        html: `<b>Welcome</b>. <p>Otp for user ${user.name} with email ${user.email} is ${otp}</p>.`,
+      });
 
       return {
         success: true,
@@ -193,17 +196,14 @@ export class UsersService {
       password = await generateHashPassword(password);
       await this.userDB.updateOne({ _id: user._id }, { password });
 
-      sendEmail(
-        user.email,
-        config.get('emailService.emailTemplates.forgotPassword'),
-        'Reset Password - E-commerce',
-        {
-          customerName: user.name,
-          customerEmail: user.email,
-          newPassword: password,
-          loginLink: config.get('loginLink'),
-        },
-      );
+      this.mailerService.sendMail({
+        to: user.email,
+        from: 'venom200011@gmail.com',
+        subject: 'Reset Your Password',
+        text: `Welcome. Please follow  the instruction below.`,
+        html: `<b>Welcome</b>. <p>Please login using the provided password and reset it using the following Link.</p><br><strong>New Password:</strong>${password}<br><strong>Login Link:</strong>${config.get('loginLink')}`,
+      });
+
       return {
         success: true,
         message: 'Password sent to your email',

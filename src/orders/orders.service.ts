@@ -8,7 +8,7 @@ import Stripe from 'stripe';
 import config from 'config';
 import { userTypes } from 'src/shared/schema/users';
 import { orderStatus, paymentStatus } from 'src/shared/schema/orders';
-import { sendEmail } from 'src/shared/utility/mail-handler';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class OrdersService {
@@ -17,6 +17,7 @@ export class OrdersService {
     @Inject(OrdersRepository) private readonly orderDB: OrdersRepository,
     @Inject(ProductsRepository) private readonly productDB: ProductsRepository,
     @Inject(UserRepository) private readonly userDB: UserRepository,
+    private readonly mailerService: MailerService,
   ) {}
 
   async create(createOrderDto: Record<string, any>) {
@@ -182,15 +183,13 @@ export class OrdersService {
   }
 
   async sendOrderEmail(email: string, orderId: string, orderLink: string) {
-    await sendEmail(
-      email,
-      config.get('emailService.emailTemplates.orderSuccess'),
-      'Order Success - Your Orders',
-      {
-        orderId,
-        orderLink,
-      },
-    );
+    await this.mailerService.sendMail({
+      to: email,
+      from: 'venom200011@gmail.com',
+      subject: 'Order Successful',
+      text: `Thank you for shopping with us.`,
+      html: `<b>Thank You</b>. <p>Thank you for shopping with us. Please find the order details below.</p><br><strong>Order Id:</strong>${orderId}<br><strong>Order Link:</strong>${orderLink}`,
+    });
   }
 
   async getLicense(orderId: string, item: Record<string, any>) {

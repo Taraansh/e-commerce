@@ -6,7 +6,8 @@ import { UsersModule } from './users/users.module';
 import { AllExceptionFilter } from './httpExceptionFilter';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
-import config from 'config'
+import config from 'config';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -14,6 +15,12 @@ import config from 'config'
     UsersModule,
     ProductsModule,
     OrdersModule,
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.gmail.com',
+        auth: { user: 'venom200011@gmail.com', pass: 'yzvknhjlzxcmtfmi' },
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [
