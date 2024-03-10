@@ -32,6 +32,7 @@
     "@types/csurf": "^1.11.5",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/mongoose": "^5.11.97",
+    "@types/multer": "^1.4.11",
     "@types/nodemailer": "^6.4.14",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",

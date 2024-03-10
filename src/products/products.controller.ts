@@ -21,6 +21,7 @@ import { GetProductQueryDto } from './dto/get-product-query-dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import config from 'config';
 import { ProductSkuDto, ProductSkuDtoArr } from './dto/product-sku.dto';
+import { diskStorage } from 'multer';
 
 @Controller('products')
 export class ProductsController {
@@ -59,17 +60,27 @@ export class ProductsController {
 
   @Post('/:id/image')
   // @Roles(userTypes.ADMIN)
+  // @UseInterceptors(
+  // FileInterceptor('productImage', {
+  //   dest: config.get('fileStoragePath'),
+  //   limits: {
+  //     fileSize: 3145728, //3 MB
+  //   },
+  // }),
+  // )
   @UseInterceptors(
     FileInterceptor('productImage', {
-      dest: config.get('fileStoragePath'),
-      limits: {
-        fileSize: 3145728, //3 MB
-      },
+      storage: diskStorage({
+        destination: config.get('fileStoragePath'),
+        filename: (req, file, cb) => {
+          cb(null, `${file.originalname}`);
+        },
+      }),
     }),
   )
   async uploadProductImage(
     @Param('id') id: string,
-    @UploadedFile() file: ParameterDecorator,
+    @UploadedFile() file: Express.Multer.File,
   ) {
     return await this.productsService.uploadProductImage(id, file);
   }

@@ -5,7 +5,7 @@
   "adminSecretToken": "admin@123",
   "loginLink": "http://localhost:3000/auth",
   "appPrefix": "/api/v1",
-  "fileStoragePath": "../uploads/",
+  "fileStoragePath": "uploads/",
   "cloudinary": {
     "cloud_name": "dsxbdwdb8",
     "api_key": "979728538987425",

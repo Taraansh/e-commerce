@@ -187,12 +187,15 @@ export class ProductsService {
     success: boolean;
     message: string;
     result: string;
+    path: string;
   }> {
     try {
       const product = await this.productDB.findOne({ _id: id });
       if (!product) {
         throw new Error('Product does not exist');
       }
+
+      // return ({success: true, result: file.path, message: 'File uploaded successfully'})
 
       if (product.imageDetails?.public_id) {
         await cloudinary.v2.uploader.destroy(product.imageDetails.public_id, {
@@ -225,6 +228,7 @@ export class ProductsService {
         success: true,
         message: 'Image Uploaded Successfully',
         result: resOfCloudinary.secure_url,
+        path: file.path,
       };
     } catch (error) {
       throw error;
